@@ -38,7 +38,24 @@ public class Tabuleiro extends javax.swing.JFrame {
     }
 
     private void mostraPartida() {
-        throw new UnsupportedOperationException("Mostrar a partida não foi implementado ainda");
+        PecaXadrez[][] pecas = partida.getpecas();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        URL resource = classLoader.getResource("peao_branco_fundo_preto.jpeg");
+        ImageIcon iconBranco = new ImageIcon(resource);
+        resource = classLoader.getResource("peao_amarelo_fundo_preto.jpeg");
+        ImageIcon iconPreto = new ImageIcon(resource);
+        for (int i = 0; i < pecas.length; i++) {
+            for (int j = 0; j < pecas[i].length; j++) {
+                if (pecas[i][j] != null) {
+                    if (pecas[i][j].getCor() == Cor.BRANCO) {
+                        listaBotoes.get(((i * 8) + j)).setIcon(iconBranco);
+                    } else {
+                        listaBotoes.get(((i * 8) + j)).setIcon(iconPreto);
+                    }
+                }
+            }
+        }
+//        throw new UnsupportedOperationException("Mostrar a partida não foi implementado ainda");
     }
 
     private void mostraTabuleiro() {
@@ -95,6 +112,7 @@ public class Tabuleiro extends javax.swing.JFrame {
             listaCapturadas.add(pecaCapturada);
         }
         mover = false;
+        mostraTabuleiro();
         mostraPartida();
     }
 
