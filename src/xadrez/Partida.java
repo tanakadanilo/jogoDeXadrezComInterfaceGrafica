@@ -116,6 +116,48 @@ public class Partida {
         return (PecaXadrez) pecaCapturada;
     }
 
+    public PecaXadrez moverPecaXadrez(Posicao inicial, Posicao alvo) {
+
+        validaPosicaoInicial(inicial);
+        validaPosicaoDestino(inicial, alvo);
+
+        Peca pecaCapturada = mover(inicial, alvo);
+
+        // jogada especial promocao
+        if (testaCheck(jogadorAtual)) {// caso o jogador tenha colocado a si mesmo em check
+            desfazerMover(inicial, alvo, pecaCapturada);
+            throw new ExcecaoXadrez("Voc? n?o pode se colocar em xeque");
+        }
+
+        PecaXadrez pecaMovida = (PecaXadrez) tabuleiro.peca(alvo);
+
+        promovida = null;
+        if (pecaMovida instanceof Peao) {
+            if (pecaMovida.getCor() == Cor.BRANCO && alvo.getLinha() == 0
+                    || pecaMovida.getCor() == Cor.PRETO && alvo.getLinha() == 7) {
+
+                promovida = (PecaXadrez) tabuleiro.peca(alvo);
+                promovida = trocarPecaPromovida("Q");
+            }
+        }
+        check = testaCheck(oponente(jogadorAtual)) ? true : false;// testa se deu check no oponente
+
+        if (testaCheckMate(oponente(jogadorAtual))) {
+            checkMate = true;
+        } else {
+            proximoTurno();
+        }
+
+        // movimento especial enPeassant
+        if (pecaMovida instanceof Peao
+                && (alvo.getLinha() == inicial.getLinha() + 2 || alvo.getLinha() == inicial.getLinha() - 2)) {
+            vulneravelEnPeassant = pecaMovida;
+        } else {
+            vulneravelEnPeassant = null;
+        }
+        return (PecaXadrez) pecaCapturada;
+    }
+
     public boolean[][] movimentosPossiveis(posicaoXadrez posicaoinicial) {
         Posicao posicao = posicaoinicial.toPosicao();
         validaPosicaoInicial(posicao);

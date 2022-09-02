@@ -1,5 +1,7 @@
 package tabuleiro;
 
+import xadrez.posicaoXadrez;
+
 public class Tabuleiro {
 
     private int linhas;
@@ -72,6 +74,10 @@ public class Tabuleiro {
     }
 
     public Peca getPeca(Posicao p) {
+        return this.pecas[p.getLinha()][p.getColuna()];
+    }
+
+    public Peca getPeca(posicaoXadrez p) {
         return this.pecas[p.getLinha()][p.getColuna()];
     }
 }

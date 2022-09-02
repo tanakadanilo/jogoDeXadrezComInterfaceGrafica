@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import tabuleiro.Peca;
 import tabuleiro.Posicao;
+import xadrez.Cor;
+import xadrez.Partida;
+import xadrez.PecaXadrez;
 
 /**
  *
@@ -26,12 +27,18 @@ public class Tabuleiro extends javax.swing.JFrame {
     ArrayList<JButton> listaBotoes = new ArrayList<>();
     private boolean mover = false;
     private Posicao posicaoInicial;
-    private tabuleiro.Tabuleiro tabuleiro;
+    private final Partida partida = new Partida();
+    private ArrayList<PecaXadrez> listaCapturadas = new ArrayList<>();
 
     public Tabuleiro() {
         initComponents();
         loadBotoes();
         mostraTabuleiro();
+        mostraPartida();
+    }
+
+    private void mostraPartida() {
+        throw new UnsupportedOperationException("Mostrar a partida não foi implementado ainda");
     }
 
     private void mostraTabuleiro() {
@@ -76,14 +83,19 @@ public class Tabuleiro extends javax.swing.JFrame {
         listaBotoes.sort(c);
     }
 
-    private void mostraJogadasPossiveis(Peca peca) {
+    private void mostraJogadasPossiveis(Posicao p) {
         //  * a peça não pode ser mudada, pois é a peça que está no jogo
-        throw new UnsupportedOperationException("A operação de mostrar as jogadas possíveis ainda não foi implementada");
+//        throw new UnsupportedOperationException("A operação de mostrar as jogadas possíveis ainda não foi implementada");
     }
 
-    private void mover(Peca peca, Posicao destino) {
+    private void mover(Posicao destino) {
         //  * a peça não pode ser mudada, pois é a peça que está no jogo
-        throw new UnsupportedOperationException("A operação de mover peça ainda não foi implementada");
+        PecaXadrez pecaCapturada = partida.moverPecaXadrez(posicaoInicial, destino);
+        if (pecaCapturada != null) {
+            listaCapturadas.add(pecaCapturada);
+        }
+        mover = false;
+        mostraPartida();
     }
 
     /**
@@ -170,9 +182,21 @@ public class Tabuleiro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButton_c2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_c2ActionPerformed(evt);
+            }
+        });
+
         jButton_a1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_a1ActionPerformed(evt);
+            }
+        });
+
+        jButton_a2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_a2ActionPerformed(evt);
             }
         });
 
@@ -182,15 +206,33 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_a4ActionPerformed(evt);
+            }
+        });
+
         jButton_a5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_a5ActionPerformed(evt);
             }
         });
 
+        jButton_a6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_a6ActionPerformed(evt);
+            }
+        });
+
         jButton_a7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_a7ActionPerformed(evt);
+            }
+        });
+
+        jButton_a8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_a8ActionPerformed(evt);
             }
         });
 
@@ -215,9 +257,21 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_f3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_f3ActionPerformed(evt);
+            }
+        });
+
         jButton_f4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_f4ActionPerformed(evt);
+            }
+        });
+
+        jButton_f5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_f5ActionPerformed(evt);
             }
         });
 
@@ -233,6 +287,18 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_h5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_h5ActionPerformed(evt);
+            }
+        });
+
+        jButton_f7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_f7ActionPerformed(evt);
+            }
+        });
+
         jButton_h6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_h6ActionPerformed(evt);
@@ -245,6 +311,18 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_h7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_h7ActionPerformed(evt);
+            }
+        });
+
+        jButton_c4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_c4ActionPerformed(evt);
+            }
+        });
+
         jButton_h8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_h8ActionPerformed(evt);
@@ -254,6 +332,12 @@ public class Tabuleiro extends javax.swing.JFrame {
         jButton_c5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_c5ActionPerformed(evt);
+            }
+        });
+
+        jButton_c6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_c6ActionPerformed(evt);
             }
         });
 
@@ -275,9 +359,27 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_g2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_g2ActionPerformed(evt);
+            }
+        });
+
         jButton_g3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_g3ActionPerformed(evt);
+            }
+        });
+
+        jButton_g4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_g4ActionPerformed(evt);
+            }
+        });
+
+        jButton_b1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_b1ActionPerformed(evt);
             }
         });
 
@@ -293,9 +395,39 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_c8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_c8ActionPerformed(evt);
+            }
+        });
+
+        jButton_g6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_g6ActionPerformed(evt);
+            }
+        });
+
+        jButton_d1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_d1ActionPerformed(evt);
+            }
+        });
+
+        jButton_b3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_b3ActionPerformed(evt);
+            }
+        });
+
         jButton_d2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_d2ActionPerformed(evt);
+            }
+        });
+
+        jButton_d3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_d3ActionPerformed(evt);
             }
         });
 
@@ -305,9 +437,21 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_d5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_d5ActionPerformed(evt);
+            }
+        });
+
         jButton_d6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_d6ActionPerformed(evt);
+            }
+        });
+
+        jButton_d7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_d7ActionPerformed(evt);
             }
         });
 
@@ -335,6 +479,24 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_g8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_g8ActionPerformed(evt);
+            }
+        });
+
+        jButton_b5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_b5ActionPerformed(evt);
+            }
+        });
+
+        jButton_h1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_h1ActionPerformed(evt);
+            }
+        });
+
         jButton_b6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_b6ActionPerformed(evt);
@@ -344,6 +506,18 @@ public class Tabuleiro extends javax.swing.JFrame {
         jButton_h2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_h2ActionPerformed(evt);
+            }
+        });
+
+        jButton_b7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_b7ActionPerformed(evt);
+            }
+        });
+
+        jButton_e2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_e2ActionPerformed(evt);
             }
         });
 
@@ -365,15 +539,39 @@ public class Tabuleiro extends javax.swing.JFrame {
             }
         });
 
+        jButton_e4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_e4ActionPerformed(evt);
+            }
+        });
+
         jButton_e5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_e5ActionPerformed(evt);
             }
         });
 
+        jButton_e6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_e6ActionPerformed(evt);
+            }
+        });
+
         jButton_e7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_e7ActionPerformed(evt);
+            }
+        });
+
+        jButton_e8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_e8ActionPerformed(evt);
+            }
+        });
+
+        jButton_f1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_f1ActionPerformed(evt);
             }
         });
 
@@ -666,61 +864,56 @@ public class Tabuleiro extends javax.swing.JFrame {
 
     private void jButton_a1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a1ActionPerformed
         Posicao PosicaoThis = new Posicao(0, 0);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_a1ActionPerformed
 
     private void jButton_a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a3ActionPerformed
         Posicao PosicaoThis = new Posicao(0, 2);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_a3ActionPerformed
 
     private void jButton_a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a5ActionPerformed
         Posicao PosicaoThis = new Posicao(0, 4);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_a5ActionPerformed
 
     private void jButton_a7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a7ActionPerformed
         Posicao PosicaoThis = new Posicao(0, 6);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_a7ActionPerformed
 
     private void jButton_h3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h3ActionPerformed
         Posicao PosicaoThis = new Posicao(7, 2);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_h3ActionPerformed
 
@@ -732,339 +925,651 @@ public class Tabuleiro extends javax.swing.JFrame {
 
     private void jButton_f4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f4ActionPerformed
         Posicao PosicaoThis = new Posicao(5, 3);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_f4ActionPerformed
 
     private void jButton_h4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h4ActionPerformed
         Posicao PosicaoThis = new Posicao(7, 3);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_h4ActionPerformed
 
     private void jButton_f6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f6ActionPerformed
         Posicao PosicaoThis = new Posicao(5, 5);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_f6ActionPerformed
 
     private void jButton_h6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h6ActionPerformed
         Posicao PosicaoThis = new Posicao(7, 5);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_h6ActionPerformed
 
     private void jButton_c3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c3ActionPerformed
         Posicao PosicaoThis = new Posicao(2, 2);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_c3ActionPerformed
 
     private void jButton_h8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h8ActionPerformed
         Posicao PosicaoThis = new Posicao(7, 7);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_h8ActionPerformed
 
     private void jButton_c5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c5ActionPerformed
         Posicao PosicaoThis = new Posicao(2, 4);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_c5ActionPerformed
 
     private void jButton_c7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c7ActionPerformed
         Posicao PosicaoThis = new Posicao(2, 6);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_c7ActionPerformed
 
     private void jButton_f8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f8ActionPerformed
         Posicao PosicaoThis = new Posicao(5, 7);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_f8ActionPerformed
 
     private void jButton_g1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g1ActionPerformed
         Posicao PosicaoThis = new Posicao(6, 0);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_g1ActionPerformed
 
     private void jButton_g3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g3ActionPerformed
         Posicao PosicaoThis = new Posicao(6, 2);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_g3ActionPerformed
 
     private void jButton_g5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g5ActionPerformed
         Posicao PosicaoThis = new Posicao(6, 4);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_g5ActionPerformed
 
     private void jButton_b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b2ActionPerformed
         Posicao PosicaoThis = new Posicao(1, 1);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_b2ActionPerformed
 
     private void jButton_d2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d2ActionPerformed
         Posicao PosicaoThis = new Posicao(3, 1);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_d2ActionPerformed
 
     private void jButton_d4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d4ActionPerformed
         Posicao PosicaoThis = new Posicao(3, 3);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_d4ActionPerformed
 
     private void jButton_d6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d6ActionPerformed
         Posicao PosicaoThis = new Posicao(3, 5);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_d6ActionPerformed
 
     private void jButton_d8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d8ActionPerformed
         Posicao PosicaoThis = new Posicao(3, 7);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_d8ActionPerformed
 
     private void jButton_e1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e1ActionPerformed
         Posicao PosicaoThis = new Posicao(4, 0);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_e1ActionPerformed
 
     private void jButton_g7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g7ActionPerformed
         Posicao PosicaoThis = new Posicao(6, 6);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_g7ActionPerformed
 
     private void jButton_b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b4ActionPerformed
         Posicao PosicaoThis = new Posicao(1, 3);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_b4ActionPerformed
 
     private void jButton_b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b6ActionPerformed
         Posicao PosicaoThis = new Posicao(1, 5);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_b6ActionPerformed
 
     private void jButton_h2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h2ActionPerformed
         Posicao PosicaoThis = new Posicao(7, 1);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_h2ActionPerformed
 
     private void jButton_b8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b8ActionPerformed
         Posicao PosicaoThis = new Posicao(1, 7);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_b8ActionPerformed
 
     private void jButton_e3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e3ActionPerformed
         Posicao PosicaoThis = new Posicao(4, 2);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_e3ActionPerformed
 
     private void jButton_c1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c1ActionPerformed
         Posicao PosicaoThis = new Posicao(2, 0);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_c1ActionPerformed
 
     private void jButton_e5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e5ActionPerformed
         Posicao PosicaoThis = new Posicao(4, 4);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_e5ActionPerformed
 
     private void jButton_e7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e7ActionPerformed
         Posicao PosicaoThis = new Posicao(4, 6);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_e7ActionPerformed
 
     private void jButton_f2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f2ActionPerformed
         Posicao PosicaoThis = new Posicao(5, 1);
-        Peca pecaEscolhida = tabuleiro.getPeca(PosicaoThis);
         if (!mover) {
             posicaoInicial = PosicaoThis;
             mover = true;
-            mostraJogadasPossiveis(pecaEscolhida);
+            mostraJogadasPossiveis(PosicaoThis);
         } else {
-            mover(pecaEscolhida, PosicaoThis);
+            mover(PosicaoThis);
         }
     }//GEN-LAST:event_jButton_f2ActionPerformed
+
+    private void jButton_d1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d1ActionPerformed
+        Posicao PosicaoThis = new Posicao(3, 0);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }    }//GEN-LAST:event_jButton_d1ActionPerformed
+
+    private void jButton_a2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a2ActionPerformed
+        Posicao PosicaoThis = new Posicao(0, 1);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_a2ActionPerformed
+
+    private void jButton_a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a4ActionPerformed
+        Posicao PosicaoThis = new Posicao(0, 3);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_a4ActionPerformed
+
+    private void jButton_a6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a6ActionPerformed
+        Posicao PosicaoThis = new Posicao(0, 5);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_a6ActionPerformed
+
+    private void jButton_a8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_a8ActionPerformed
+        Posicao PosicaoThis = new Posicao(0, 7);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_a8ActionPerformed
+
+    private void jButton_b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b1ActionPerformed
+        Posicao PosicaoThis = new Posicao(1, 0);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_b1ActionPerformed
+
+    private void jButton_b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b3ActionPerformed
+        Posicao PosicaoThis = new Posicao(1, 2);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_b3ActionPerformed
+
+    private void jButton_b5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b5ActionPerformed
+        Posicao PosicaoThis = new Posicao(1, 4);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_b5ActionPerformed
+
+    private void jButton_b7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_b7ActionPerformed
+        Posicao PosicaoThis = new Posicao(1, 6);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_b7ActionPerformed
+
+    private void jButton_c2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c2ActionPerformed
+        Posicao PosicaoThis = new Posicao(2, 1);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_c2ActionPerformed
+
+    private void jButton_c4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c4ActionPerformed
+        Posicao PosicaoThis = new Posicao(2, 3);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_c4ActionPerformed
+
+    private void jButton_c6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c6ActionPerformed
+        Posicao PosicaoThis = new Posicao(2, 5);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_c6ActionPerformed
+
+    private void jButton_c8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_c8ActionPerformed
+        Posicao PosicaoThis = new Posicao(2, 7);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_c8ActionPerformed
+
+    private void jButton_d3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d3ActionPerformed
+        Posicao PosicaoThis = new Posicao(3, 2);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_d3ActionPerformed
+
+    private void jButton_d5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d5ActionPerformed
+        Posicao PosicaoThis = new Posicao(3, 4);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_d5ActionPerformed
+
+    private void jButton_d7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_d7ActionPerformed
+        Posicao PosicaoThis = new Posicao(3, 6);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_d7ActionPerformed
+
+    private void jButton_e2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e2ActionPerformed
+        Posicao PosicaoThis = new Posicao(4, 1);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_e2ActionPerformed
+
+    private void jButton_e4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e4ActionPerformed
+        Posicao PosicaoThis = new Posicao(4, 3);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_e4ActionPerformed
+
+    private void jButton_e6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e6ActionPerformed
+        Posicao PosicaoThis = new Posicao(4, 5);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_e6ActionPerformed
+
+    private void jButton_e8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_e8ActionPerformed
+        Posicao PosicaoThis = new Posicao(4, 7);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_e8ActionPerformed
+
+    private void jButton_f1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f1ActionPerformed
+        Posicao PosicaoThis = new Posicao(5, 0);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_f1ActionPerformed
+
+    private void jButton_f3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f3ActionPerformed
+        Posicao PosicaoThis = new Posicao(5, 2);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_f3ActionPerformed
+
+    private void jButton_f5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f5ActionPerformed
+        Posicao PosicaoThis = new Posicao(5, 4);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_f5ActionPerformed
+
+    private void jButton_f7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_f7ActionPerformed
+        Posicao PosicaoThis = new Posicao(5, 6);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_f7ActionPerformed
+
+    private void jButton_g2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g2ActionPerformed
+        Posicao PosicaoThis = new Posicao(6, 1);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_g2ActionPerformed
+
+    private void jButton_g4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g4ActionPerformed
+        Posicao PosicaoThis = new Posicao(6, 3);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_g4ActionPerformed
+
+    private void jButton_g6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g6ActionPerformed
+        Posicao PosicaoThis = new Posicao(6, 5);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_g6ActionPerformed
+
+    private void jButton_g8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_g8ActionPerformed
+        Posicao PosicaoThis = new Posicao(6, 7);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_g8ActionPerformed
+
+    private void jButton_h1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h1ActionPerformed
+        Posicao PosicaoThis = new Posicao(7, 0);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_h1ActionPerformed
+
+    private void jButton_h5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h5ActionPerformed
+        Posicao PosicaoThis = new Posicao(7, 4);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_h5ActionPerformed
+
+    private void jButton_h7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_h7ActionPerformed
+        Posicao PosicaoThis = new Posicao(7, 6);
+        if (!mover) {
+            posicaoInicial = PosicaoThis;
+            mover = true;
+            mostraJogadasPossiveis(PosicaoThis);
+        } else {
+            mover(PosicaoThis);
+        }
+    }//GEN-LAST:event_jButton_h7ActionPerformed
 
     /**
      * @param args the command line arguments

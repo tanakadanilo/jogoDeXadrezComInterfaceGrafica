@@ -14,6 +14,14 @@ public abstract class Peca {
         return tabuleiro;
     }
 
+    public Posicao getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(Posicao posicao) {
+        this.posicao = posicao;
+    }
+
     public abstract boolean[][] movimentosPossiveis();
 
     public boolean podeMover(Posicao posicao) {
